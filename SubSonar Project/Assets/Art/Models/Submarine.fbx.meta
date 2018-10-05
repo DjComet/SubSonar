@@ -1,0 +1,182 @@
+fileFormatVersion: 2
+guid: 04047177e0a9e8049b6c34742c5cb93e
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Cresta
+    100002: LeftWing
+    100004: Propeller1
+    100006: Propeller2
+    100008: Propeller3
+    100010: Propeller4
+    100012: PropellerCowling
+    100014: PropellerMast
+    100016: RightWing
+    100018: //RootNode
+    100020: Crest
+    100022: FrontLight
+    100024: SubBody
+    400000: Cresta
+    400002: LeftWing
+    400004: Propeller1
+    400006: Propeller2
+    400008: Propeller3
+    400010: Propeller4
+    400012: PropellerCowling
+    400014: PropellerMast
+    400016: RightWing
+    400018: //RootNode
+    400020: Crest
+    400022: FrontLight
+    400024: SubBody
+    2100000: SubDecoration
+    2100002: SubMetal
+    2100004: Glass
+    2100006: SubMetalLight
+    2100008: PropellerMAT
+    2300000: Cresta
+    2300002: LeftWing
+    2300004: Propeller1
+    2300006: Propeller2
+    2300008: Propeller3
+    2300010: Propeller4
+    2300012: PropellerCowling
+    2300014: PropellerMast
+    2300016: RightWing
+    2300018: //RootNode
+    2300020: Crest
+    2300022: FrontLight
+    2300024: SubBody
+    3300000: Cresta
+    3300002: LeftWing
+    3300004: Propeller1
+    3300006: Propeller2
+    3300008: Propeller3
+    3300010: Propeller4
+    3300012: PropellerCowling
+    3300014: PropellerMast
+    3300016: RightWing
+    3300018: //RootNode
+    3300020: Crest
+    3300022: FrontLight
+    3300024: SubBody
+    4300000: SubBody
+    4300002: PropellerMast
+    4300004: Propeller4
+    4300006: Propeller3
+    4300008: Propeller2
+    4300010: Propeller1
+    4300012: PropellerCowling
+    4300014: LeftWing
+    4300016: RightWing
+    4300018: Cresta
+    4300020: Crest
+    4300022: FrontLight
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 3aed52a8ce4e92a4f889ef47bb6901b4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PropellerMAT
+    second: {fileID: 2100000, guid: 693448b0a754b7a4dbb402f11d940c7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SubDecoration
+    second: {fileID: 2100000, guid: 968f00c030cccb742a9cd82235ef4c72, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SubMetal
+    second: {fileID: 2100000, guid: a474c70e1c3b9d54fac1fac298d59cfb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SubMetalLight
+    second: {fileID: 2100000, guid: 801a10a1faf0ba145a2650e27ba1b20e, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
