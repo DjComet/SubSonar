@@ -19,9 +19,12 @@ public class SubController : MonoBehaviour {
     private Quaternion pitchedDown;
     private Quaternion pitchedUp;
 
+    public Vector3 initialTouchPos;
+    public Vector3 currentTouchPos;
+    public Vector3 dragDirection;
+    public Vector3 InitialSubPos;
+    public Vector3 targetSubPos;
 
-    private Vector3 initialCenterOfMass;
-    private Vector3 yInitialCOM;
     public List<Transform> propellers;
     public List<Transform> fins;
 
@@ -43,11 +46,7 @@ public class SubController : MonoBehaviour {
                 fins.Add(transform.GetChild(i).transform);
             }
         }
-        initialCenterOfMass = rb.centerOfMass;
-        yInitialCOM = Vector3.one * initialCenterOfMass.y;
-        yInitialCOM.x = 0f;
-        yInitialCOM.z = 0f;
-        Debug.Log("initial COM: " + initialCenterOfMass + ", yInitialCOM: " + yInitialCOM);
+        
 
         
     }
@@ -63,11 +62,7 @@ public class SubController : MonoBehaviour {
     {        
         if(hasEnergy)
         {
-            for(int i = fins.Count-1; i>=0; i--)
-            {
-                rb.MovePosition(transform.position + fins[i].forward * propellerSpeed * Time.deltaTime);
-                Debug.Log("Force added");
-            }
+            
             
         }
     }
@@ -122,6 +117,32 @@ public class SubController : MonoBehaviour {
         offsetSpeed = Mathf.Clamp(offsetSpeed, -acceleration * Time.deltaTime, acceleration * Time.deltaTime);
         speed += offsetSpeed * Time.deltaTime;
         return speed;
+    }
+
+    void touchDrag()
+    {
+        if(Input.GetButtonDown("Fire1"))
+        {
+            initialTouchPos = Input.mousePosition;
+            Debug.Log("First ScreenMousePosition: " + initialTouchPos);
+            InitialSubPos = transform.position;
+        }
+        else if(Input.GetButton("Fire1"))
+        {
+            currentTouchPos = Input.mousePosition;
+            dragDirection = currentTouchPos - initialTouchPos;
+
+            targetSubPos = initialTouchPos + dragDirection;
+        }
+    }
+
+    public Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
+        float distance;
+        xy.Raycast(ray, out distance);
+        return ray.GetPoint(distance);
     }
 }
 
