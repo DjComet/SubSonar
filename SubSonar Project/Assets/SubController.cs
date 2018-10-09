@@ -8,7 +8,9 @@ public class SubController : MonoBehaviour {
     public float propellerSpeed = 5f;
     
     public float maxPitchAngle = 50f;
-
+    public float zSpeed = 5f;
+    public float lateralSpeed = 2f;
+    public float sensitivity = 0.5f;
     public float PitchMaxSpeed = 4f;
     public float PitchSpeed = 3f;
     public float bodyPitchSpeed = 1f;
@@ -22,7 +24,7 @@ public class SubController : MonoBehaviour {
     public Vector3 initialTouchPos;
     public Vector3 currentTouchPos;
     public Vector3 dragDirection;
-    public Vector3 InitialSubPos;
+    public Vector3 initialSubPos;
     public Vector3 targetSubPos;
 
     public List<Transform> propellers;
@@ -55,15 +57,19 @@ public class SubController : MonoBehaviour {
 	void Update () {
 
         move();
-        rotate();
+        
 	}
     
     void move()
     {        
         if(hasEnergy)
         {
-            
-            
+            touchDrag();
+            Vector3 totalSubPos;
+            totalSubPos.x = targetSubPos.x;
+            totalSubPos.y = targetSubPos.y;
+            totalSubPos.z = transform.position.z + zSpeed * Time.deltaTime;
+            transform.position = totalSubPos;
         }
     }
 
@@ -111,13 +117,6 @@ public class SubController : MonoBehaviour {
         transform.rotation = Quaternion.Slerp(pitchedDown, pitchedUp, t2);
     }
 
-    float accelerate(float maxSpeed, float acceleration, float speed)
-    {
-        float offsetSpeed = maxSpeed - speed;
-        offsetSpeed = Mathf.Clamp(offsetSpeed, -acceleration * Time.deltaTime, acceleration * Time.deltaTime);
-        speed += offsetSpeed * Time.deltaTime;
-        return speed;
-    }
 
     void touchDrag()
     {
@@ -125,14 +124,21 @@ public class SubController : MonoBehaviour {
         {
             initialTouchPos = Input.mousePosition;
             Debug.Log("First ScreenMousePosition: " + initialTouchPos);
-            InitialSubPos = transform.position;
+            initialTouchPos = GetWorldPositionOnPlane(initialTouchPos, transform.position.z);//The mouse projection plane has to be created on the subs z position
+            Debug.Log("First WorldMousePosition: " + initialTouchPos);
+            initialSubPos = transform.position;
         }
         else if(Input.GetButton("Fire1"))
         {
             currentTouchPos = Input.mousePosition;
+            Debug.Log("Current ScreenMousePosition: " + currentTouchPos);
+            currentTouchPos = GetWorldPositionOnPlane(currentTouchPos, transform.position.z);
+            Debug.Log("Current WorldMousePosition: " + currentTouchPos + "Distance Cam-sub : " + Vector3.Distance(Camera.main.transform.position, transform.position));
             dragDirection = currentTouchPos - initialTouchPos;
+            Debug.Log("DragDirection = " + dragDirection);
 
-            targetSubPos = initialTouchPos + dragDirection;
+            targetSubPos = initialSubPos + dragDirection * sensitivity; //Thanks to the sensitivity we can set how much distance the sub actually travels
+                                                                        //in relation to the distance traveled by the mouse/touch input
         }
     }
 

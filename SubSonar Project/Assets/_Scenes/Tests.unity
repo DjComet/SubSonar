@@ -561,7 +561,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 664771740}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 6}
+  m_LocalPosition: {x: 0, y: 0, z: 9.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 838413516}
@@ -587,6 +587,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   propellerSpeed: 5
   maxPitchAngle: 45
+  speed: 20
+  sensitivity: 0.5
   PitchMaxSpeed: 4
   PitchSpeed: 3
   bodyPitchSpeed: 2
@@ -597,7 +599,7 @@ MonoBehaviour:
   initialTouchPos: {x: 0, y: 0, z: 0}
   currentTouchPos: {x: 0, y: 0, z: 0}
   dragDirection: {x: 0, y: 0, z: 0}
-  InitialSubPos: {x: 0, y: 0, z: 0}
+  initialSubPos: {x: 0, y: 0, z: 0}
   targetSubPos: {x: 0, y: 0, z: 0}
   propellers: []
   fins: []
@@ -1603,9 +1605,17 @@ MonoBehaviour:
     areaError: 15
   asset_guid: 
   dontDestroyMeshOnDelete: 0
-  m_selectedFaces: 
-  m_SelectedEdges: []
-  m_selectedTriangles: 
+  m_selectedFaces: 00000000
+  m_SelectedEdges:
+  - x: 0
+    y: 1
+  - x: 2
+    y: 0
+  - x: 1
+    y: 3
+  - x: 3
+    y: 2
+  m_selectedTriangles: 000000000100000002000000010000000300000002000000
 --- !u!33 &1198522414
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2003,7 +2013,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh16502
+  m_Name: pb_Mesh12590
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -2244,7 +2254,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1722030643}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.63, z: -6.68}
+  m_LocalPosition: {x: 0, y: 3.82, z: -13.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
