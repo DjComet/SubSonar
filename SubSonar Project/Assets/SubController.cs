@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SubController : MonoBehaviour {
-
+    float dt;
     
     public float propellerSpeed = 5f;
     
     public float maxPitchAngle = 50f;
-    public float zSpeed = 5f;
-    public float lateralSpeed = 2f;
-    public float sensitivity = 0.5f;
-    public float PitchMaxSpeed = 4f;
-    public float PitchSpeed = 3f;
-    public float bodyPitchSpeed = 1f;
-    public float finsPitchAccel = 5f;
-    public float bodyPitchAccel = 2f;
+    public float maxZSpeed = 5f;
+    public float maxXYSpeed = 2f;
+    public float subAccel = 10f;
+    public Vector3 subSpeed;
+    public Vector2 direction;
+    public float sensitivity = 0.75f;
+    
     public float t = 0.5f;
-    public float t2 = 0.5f;
+    
     private Quaternion pitchedDown;
     private Quaternion pitchedUp;
 
@@ -26,7 +25,7 @@ public class SubController : MonoBehaviour {
     public Vector3 dragDirection;
     public Vector3 initialSubPos;
     public Vector3 targetSubPos;
-
+    Vector3 totalSubPos = Vector3.zero;
     public List<Transform> propellers;
     public List<Transform> fins;
 
@@ -38,7 +37,6 @@ public class SubController : MonoBehaviour {
         Debug.Log(transform.childCount);
         for (int i = 0; i < transform.childCount; i++)
         {
-            Debug.Log("i: " + i);
             if (transform.GetChild(i).tag == "Propeller")
             {
                 propellers.Add(transform.GetChild(i).transform);
@@ -48,14 +46,11 @@ public class SubController : MonoBehaviour {
                 fins.Add(transform.GetChild(i).transform);
             }
         }
-        
-
-        
     }
 	
 	// Update is called once per frame
 	void Update () {
-
+        dt = Time.deltaTime;
         move();
         
 	}
@@ -65,62 +60,43 @@ public class SubController : MonoBehaviour {
         if(hasEnergy)
         {
             touchDrag();
-            Vector3 totalSubPos;
+            
+            /*
+            direction.x = Mathf.Sign(targetSubPos.x - transform.position.x);
+            if (targetSubPos.x - transform.position.x == 0) direction.x = 0;
+            direction.y = Mathf.Sign(targetSubPos.y - transform.position.y);
+            if (targetSubPos.y - transform.position.y == 0) direction.y = 0;
+
+            float xTargetSpeed = maxXYSpeed * direction.x;
+            float yTargetSpeed = maxXYSpeed * direction.y;
+            float xOffsetSpeed = xTargetSpeed - subSpeed.x;
+            float yOffsetSpeed = yTargetSpeed - subSpeed.y;
+            xOffsetSpeed = Mathf.Clamp(xOffsetSpeed, -subAccel * dt, subAccel * dt);
+            yOffsetSpeed = Mathf.Clamp(yOffsetSpeed, -subAccel * dt, subAccel * dt);
+            subSpeed.x += xOffsetSpeed;
+            subSpeed.y += yOffsetSpeed;*/
+
+
+            totalSubPos.x = Mathf.MoveTowards(transform.position.x, targetSubPos.x, 0.5f);
+            totalSubPos.y = Mathf.MoveTowards(transform.position.y, targetSubPos.y, 0.5f);
+
             totalSubPos.x = targetSubPos.x;
             totalSubPos.y = targetSubPos.y;
-            totalSubPos.z = transform.position.z + zSpeed * Time.deltaTime;
+            totalSubPos.z = transform.position.z + maxZSpeed * dt;
             transform.position = totalSubPos;
         }
     }
 
+    
+
+
     void rotate()
     {
-        pitchedDown = Quaternion.AngleAxis(maxPitchAngle, transform.right);
-        pitchedUp = Quaternion.AngleAxis(-maxPitchAngle, transform.right);
-
-        //PitchSpeed = accelerate(PitchMaxSpeed, finsPitchAccel, PitchSpeed);
-        //bodyPitchSpeed = accelerate(PitchMaxSpeed, bodyPitchAccel, bodyPitchSpeed);
-        if (Input.GetButton("Fire1"))
-        {
-            t += PitchSpeed * Time.deltaTime;
-            t2 += bodyPitchSpeed * Time.deltaTime;
-        }
-        else if(Input.GetButton("Fire2"))
-        {
-            t -= PitchSpeed * Time.deltaTime;
-            t2 -= bodyPitchSpeed * Time.deltaTime;
-        }
-        else
-        {
-            if(t<0.5f || t2<0.5f)
-            {
-                t +=  PitchSpeed * Time.deltaTime;
-                t2 += bodyPitchSpeed * Time.deltaTime;
-                t = Mathf.Clamp(t, 0, 0.5f);
-                t2 = Mathf.Clamp(t2, 0, 0.5f);
-            }
-            else if(t>0.5f || t2>0.5f)
-            {
-                t -= PitchSpeed * Time.deltaTime;
-                t2 -= bodyPitchSpeed * Time.deltaTime;
-                t = Mathf.Clamp(t, 0.5f, 1);
-                t2 = Mathf.Clamp(t2, 0.5f, 1);
-            }
-        }
-        t = Mathf.Clamp01(t);
-        t2 = Mathf.Clamp01(t2);
-
-        for (int i = fins.Count-1; i>=0; i--)
-        {
-            fins[i].rotation = Quaternion.Slerp(pitchedDown, pitchedUp, t);
-        }
-        transform.rotation = Quaternion.Slerp(pitchedDown, pitchedUp, t2);
     }
-
 
     void touchDrag()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             initialTouchPos = Input.mousePosition;
             Debug.Log("First ScreenMousePosition: " + initialTouchPos);
@@ -128,7 +104,7 @@ public class SubController : MonoBehaviour {
             Debug.Log("First WorldMousePosition: " + initialTouchPos);
             initialSubPos = transform.position;
         }
-        else if(Input.GetButton("Fire1"))
+        else if (Input.GetButton("Fire1"))
         {
             currentTouchPos = Input.mousePosition;
             Debug.Log("Current ScreenMousePosition: " + currentTouchPos);
@@ -139,7 +115,10 @@ public class SubController : MonoBehaviour {
 
             targetSubPos = initialSubPos + dragDirection * sensitivity; //Thanks to the sensitivity we can set how much distance the sub actually travels
                                                                         //in relation to the distance traveled by the mouse/touch input
+            t = Vector3.Distance(transform.position, targetSubPos) / Vector3.Distance(initialSubPos, targetSubPos);
         }
+        else t = 0;
+
     }
 
     public Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z)
